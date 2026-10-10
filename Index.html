@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="ta">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090714">
+<meta name="description" content="செந்தூர் பாண்டியன் உலகம் — Tamil tradition meets a new digital world.">
+<title>செந்தூர் பாண்டியன் உலகம் | Sendhur Pandian Ulagam</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;500;600;700;800&display=swap');
+:root{--bg:#090714;--panel:#151126;--purple:#8c72ff;--violet:#6043d9;--gold:#f3d7a0;--white:#faf8ff;--muted:#b8b1ce;--line:#3b315b}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--white);font-family:Manrope,"Noto Sans Tamil",system-ui,sans-serif}body{overflow-x:hidden;background:radial-gradient(ellipse at 50% -15%,#38236b 0,transparent 48%),radial-gradient(ellipse at 90% 85%,#28194c55 0,transparent 36%),var(--bg)}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #d9caff;outline-offset:3px}.hidden{display:none!important}
+#intro{position:fixed;inset:0;z-index:50;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at 50% 42%,#2a1d51 0,transparent 40%),linear-gradient(145deg,#080611,#110b22 60%,#080611);transition:opacity .7s ease}
+#intro:before{content:"";position:absolute;inset:-20%;background:repeating-radial-gradient(circle at 50% 50%,transparent 0 45px,#9b7bff0a 46px 47px);animation:slowSpin 90s linear infinite}
+.starfield{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(2px 2px at 12% 20%,#e8dfff99 50%,transparent 60%),radial-gradient(1px 1px at 80% 23%,#fff9 50%,transparent 60%),radial-gradient(2px 2px at 72% 75%,#b8a0ff99 50%,transparent 60%),radial-gradient(1px 1px at 25% 78%,#fff8 50%,transparent 60%),radial-gradient(1px 1px at 91% 55%,#d8c7ff 50%,transparent 60%);animation:twinkle 3s ease-in-out infinite alternate}
+.intro-content{position:relative;z-index:2;width:min(92vw,720px);min-height:min(90svh,780px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:34px 20px}
+.intro-kicker{font-size:.67rem;letter-spacing:.34em;color:#b8a7ff;text-transform:uppercase;margin-bottom:18px;opacity:0;animation:fadeUp .8s .15s forwards}
+.symbol-wrap{width:clamp(155px,36vw,240px);aspect-ratio:1;position:relative;display:grid;place-items:center;margin:0 auto 15px;transform:translateY(38vh) scale(2.4);opacity:0;animation:symbolArrive 1.55s .3s cubic-bezier(.16,.8,.2,1) forwards}
+.namaste-overlay{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:clamp(2.9rem,11vw,4.5rem);line-height:1;filter:drop-shadow(0 0 15px #e7caff99);animation:namasteGlow 2.5s 1.7s ease-in-out infinite}
+.kolam{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 22px #967aff4d)}
+.kolam .orbit{transform-origin:120px 120px;animation:slowSpin 24s linear infinite}.kolam .orbit.rev{animation-direction:reverse;animation-duration:32s}.kolam .core{transform-origin:120px 120px;animation:breathe 3s ease-in-out infinite}
+.intro-title{font-family:"Noto Sans Tamil",Manrope,sans-serif;font-size:clamp(2.15rem,8vw,4.4rem);line-height:1.25;letter-spacing:-.045em;margin:3px 0 10px;color:#fff3d5;text-shadow:0 0 28px #ad8fff44;opacity:0;transform:translateY(-35px);animation:dropSettle .85s 1.55s cubic-bezier(.16,.9,.25,1) forwards}
+.intro-line{font-family:"Noto Sans Tamil",sans-serif;font-size:clamp(.95rem,3vw,1.2rem);line-height:1.9;color:#d6cce9;margin:0;opacity:0;transform:translateY(12px);animation:fadeUp .65s 2.15s forwards}
+.intro-line.second{animation-delay:2.65s;color:var(--gold)}
+.curved-note{font-size:clamp(.65rem,2vw,.78rem);letter-spacing:.2em;color:#a69ac8;margin-top:14px;opacity:0;animation:fadeUp .7s 3.1s forwards}
+.symbol-wrap.emphasis{animation:heroPulse 1.25s 3.5s cubic-bezier(.2,.8,.2,1) both}
+.english-phase{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 20px;opacity:0;pointer-events:none}
+.english-symbol{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:clamp(7rem,28vw,13rem);line-height:1;filter:drop-shadow(0 0 28px #aa96ff99);transform:scale(.35);opacity:0}
+.english-title{font-size:clamp(2.4rem,9vw,5rem);letter-spacing:-.06em;line-height:1.08;margin:26px 0 14px;font-weight:800;opacity:0;transform:translateY(-18px)}
+.english-title span{background:linear-gradient(100deg,#fff,#e1d7ff,#b69aff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.english-sub{font-size:clamp(.95rem,3vw,1.2rem);color:#d4c9eb;opacity:0;transform:translateY(10px)}
+#intro.english .intro-kicker,#intro.english .symbol-wrap,#intro.english .intro-title,#intro.english .intro-line,#intro.english .curved-note{opacity:0!important;animation:none!important;pointer-events:none}
+#intro.english .english-phase{opacity:1;pointer-events:auto}
+#intro.english .english-symbol{animation:handshakePop 1.2s .1s cubic-bezier(.16,.8,.2,1) forwards}
+#intro.english .english-title{animation:fadeUp .8s .65s forwards}
+#intro.english .english-sub{animation:fadeUp .7s 1.05s forwards}
+.intro-controls{position:absolute;bottom:max(18px,env(safe-area-inset-bottom));left:0;right:0;display:flex;justify-content:center;gap:12px;z-index:5}
+.small-action{border:1px solid #ffffff27;background:#ffffff08;color:#c9c0dc;border-radius:999px;padding:9px 15px;font-size:.75rem;backdrop-filter:blur(8px)}
+.small-action:hover{background:#ffffff14;color:white}
+#intro.leaving{opacity:0;pointer-events:none}
+#portal{min-height:100svh;display:flex;flex-direction:column;opacity:0;transform:scale(1.015);transition:opacity .7s ease,transform .7s ease}
+#portal.visible{opacity:1;transform:scale(1)}
+.topbar{width:min(1120px,calc(100% - 36px));margin:0 auto;padding:22px 0;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:11px}.brand-mark{width:43px;height:43px;display:grid;place-items:center;border:1px solid #b7a0ff7a;border-radius:15px;background:linear-gradient(145deg,#8e72ff40,#d6b4ff0b);box-shadow:0 0 25px #8064ff22;font-size:1.25rem}.brand-text strong{display:block;font-size:.86rem;letter-spacing:.06em}.brand-text span{display:block;color:#988eaf;font-size:.63rem;letter-spacing:.12em;margin-top:3px}
+.top-actions{display:flex;align-items:center;gap:9px}.lang{background:#171229;color:#eee7ff;border:1px solid var(--line);border-radius:12px;padding:9px 12px}
+main{flex:1;display:grid;place-items:center;padding:22px 18px 50px}.hero{width:min(100%,800px);text-align:center;position:relative;padding:clamp(25px,6vw,60px) clamp(18px,5vw,48px);border:1px solid #4c3b70;border-radius:32px;background:linear-gradient(145deg,#171127d9,#0e0a1bdb);box-shadow:0 28px 100px #0006;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:12px;border:1px solid #a58bff21;border-radius:23px;pointer-events:none}
+.hero-art{width:clamp(105px,23vw,170px);margin:0 auto 18px;filter:drop-shadow(0 0 28px #9c7aff50);animation:breathe 4s ease-in-out infinite}
+.eyebrow{font-size:.68rem;letter-spacing:.22em;color:#b7a5ff;text-transform:uppercase;font-weight:800}
+.hero h1{font-family:"Noto Sans Tamil",Manrope,sans-serif;font-size:clamp(2rem,7vw,4.4rem);line-height:1.2;letter-spacing:-.04em;margin:14px 0 15px}
+.gradient{background:linear-gradient(100deg,#fff2d6,#d9c7ff 55%,#a48aff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);font-size:clamp(.94rem,2.6vw,1.08rem);line-height:1.85;max-width:540px;margin:0 auto 28px}
+.actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}
+.btn{min-height:51px;border-radius:14px;padding:13px 21px;font-weight:800;border:1px solid transparent;transition:transform .2s,filter .2s,background .2s}.btn:hover{transform:translateY(-2px);filter:brightness(1.1)}.primary{color:white;background:linear-gradient(110deg,#8c6bff,#6042d8);box-shadow:0 12px 28px #6f51e54d}.secondary{background:#ffffff08;border-color:#51436e;color:#eee7ff}
+.trust-row{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;color:#827894;font-size:.7rem;margin-top:26px}
+.footer{padding:0 18px 24px;text-align:center;color:#6f6684;font-size:.7rem}
+
+.step-dots{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 22px}
+.step-dot{width:8px;height:8px;border-radius:99px;background:#51436e}
+.step-dot.active{width:25px;background:linear-gradient(90deg,#9b7cff,#f3d7a0)}
+.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0}
+.choice-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;min-height:120px;padding:18px 12px;border:1px solid #403653;border-radius:17px;background:#0b0815;color:#f7f2ff;text-align:center}
+.choice-card .choice-icon{font-size:1.8rem}
+.choice-card small{color:#a9a0c2;font-size:.75rem}
+.choice-card.selected{border-color:#a991ff;background:linear-gradient(145deg,#5d43a533,#171229);box-shadow:0 0 0 2px #8c72ff20}
+.field select,.field input[type=date]{width:100%;background:#0b0815;border:1px solid #403653;border-radius:12px;padding:14px;color:white;min-height:49px}
+.gender-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.gender-option{display:flex;align-items:center;gap:9px;border:1px solid #403653;border-radius:12px;padding:13px;background:#0b0815;color:#e5def5;font-size:.9rem}
+.gender-option:has(input:checked){border-color:#a991ff;background:#8c72ff17}
+.step-actions{display:grid;gap:10px;margin-top:22px}
+@media(max-width:420px){.choice-grid{grid-template-columns:1fr}.choice-card{min-height:86px;flex-direction:row;justify-content:flex-start;padding:15px}.choice-card .choice-icon{font-size:1.5rem}.gender-options{grid-template-columns:1fr}}
+
+.screen{width:min(100%,550px);border:1px solid #403357;border-radius:26px;background:linear-gradient(145deg,#181229,#100c1e);padding:clamp(23px,5vw,42px);box-shadow:0 25px 80px #0005}.screen h2{font-size:clamp(1.8rem,6vw,2.5rem);margin:8px 0 12px;letter-spacing:-.05em}.screen p{color:var(--muted);line-height:1.7}.form{display:grid;gap:16px;margin-top:22px}.field{display:grid;gap:7px}.field label{font-size:.85rem;color:#e5def5;font-weight:700}.field input{width:100%;background:#0b0815;border:1px solid #403653;border-radius:12px;padding:14px;color:white}.field input::placeholder{color:#706780}.form-error{min-height:1.2em;color:#ffb8c1;font-size:.8rem}.back{background:none;border:0;color:#c7b8ff;padding:8px 0;margin-bottom:10px}
+#circleReveal{position:fixed;z-index:80;inset:0;pointer-events:none;background:radial-gradient(circle at var(--x,50%) var(--y,50%),#c3aaff 0,#7654ec 35%,#090714 72%);clip-path:circle(0 at var(--x,50%) var(--y,50%));opacity:1}
+#circleReveal.go{animation:circleOpen .95s cubic-bezier(.76,0,.24,1) forwards}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}@keyframes dropSettle{0%{opacity:0;transform:translateY(-35px)}75%{opacity:1;transform:translateY(4px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes symbolArrive{0%{opacity:0;transform:translateY(38vh) scale(2.4)}65%{opacity:1;transform:translateY(-5px) scale(.93)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes heroPulse{0%{transform:scale(1)}35%{transform:scale(1.22)}100%{transform:scale(1)}}
+@keyframes handshakePop{0%{opacity:0;transform:scale(.35) rotate(-9deg)}55%{opacity:1;transform:scale(1.18) rotate(3deg)}78%{transform:scale(.96) rotate(0)}100%{opacity:1;transform:scale(1)}}
+@keyframes circleOpen{0%{clip-path:circle(0 at var(--x,50%) var(--y,50%));opacity:1}55%{clip-path:circle(55vmax at var(--x,50%) var(--y,50%));opacity:1}100%{clip-path:circle(150vmax at var(--x,50%) var(--y,50%));opacity:0}}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}@keyframes slowSpin{to{transform:rotate(360deg)}}@keyframes twinkle{to{opacity:.45}}@keyframes namasteGlow{0%,100%{filter:drop-shadow(0 0 12px #e7caff77);scale:1}50%{filter:drop-shadow(0 0 25px #f3d7a0cc);scale:1.08}}
+@media(max-width:520px){.topbar{width:calc(100% - 24px);padding:16px 0}.brand-mark{width:38px;height:38px}.brand-text strong{font-size:.72rem}.brand-text span{font-size:.54rem}.hero{border-radius:24px;padding:28px 19px}.hero:before{inset:8px;border-radius:17px}.actions{flex-direction:column}.actions .btn{width:100%}.trust-row{gap:10px}.intro-content{padding:22px 14px}.intro-line{max-width:320px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<section id="intro" aria-label="Welcome animation">
+  <div class="starfield"></div>
+  <div class="intro-content">
+    <div class="intro-kicker">தமிழர் மரபு · ஒரு புதிய உலகம்</div>
+    <div class="symbol-wrap" id="tamilSymbol">
+      <svg class="kolam" viewBox="0 0 240 240" role="img" aria-label="Tamil kolam-inspired Vanakkam symbol">
+        <defs><radialGradient id="glow"><stop stop-color="#a78bfa" stop-opacity=".42"/><stop offset="1" stop-color="#6c4ddd" stop-opacity="0"/></radialGradient><linearGradient id="line" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0c7"/><stop offset=".5" stop-color="#d4c3ff"/><stop offset="1" stop-color="#8b72ff"/></linearGradient></defs>
+        <circle cx="120" cy="120" r="110" fill="url(#glow)"/>
+        <g class="orbit" fill="none" stroke="url(#line)" stroke-width="1.7"><circle cx="120" cy="120" r="93" stroke-dasharray="2 8"/><ellipse cx="120" cy="120" rx="74" ry="104"/><ellipse cx="120" cy="120" rx="104" ry="74" transform="rotate(45 120 120)"/></g>
+        <g class="orbit rev" fill="none" stroke="url(#line)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M120 27 C148 55 148 83 120 101 C92 83 92 55 120 27Z"/><path d="M120 213 C148 185 148 157 120 139 C92 157 92 185 120 213Z"/><path d="M27 120 C55 92 83 92 101 120 C83 148 55 148 27 120Z"/><path d="M213 120 C185 92 157 92 139 120 C157 148 185 148 213 120Z"/><path d="M55 55 C91 52 103 78 120 101 C137 78 149 52 185 55 C188 91 162 103 139 120 C162 137 188 149 185 185 C149 188 137 162 120 139 C103 162 91 188 55 185 C52 149 78 137 101 120 C78 103 52 91 55 55Z"/></g>
+        <g class="core"><circle cx="120" cy="120" r="29" fill="#18112d" stroke="#f1d9a7" stroke-width="1.6"/><text x="120" y="130" text-anchor="middle" font-family="Noto Sans Tamil,sans-serif" font-size="29" fill="#fff0cc">வ</text></g>
+        <g fill="#fff0ce"><circle cx="120" cy="27" r="3"/><circle cx="120" cy="213" r="3"/><circle cx="27" cy="120" r="3"/><circle cx="213" cy="120" r="3"/></g>
+      </svg>
+      <div class="namaste-overlay" aria-label="Vanakkam, folded hands" role="img">🙏</div>
+    </div>
+    <h1 class="intro-title">வணக்கம்</h1>
+    <p class="intro-line">உங்களை அன்புடன் வரவேற்கிறது</p>
+    <p class="intro-line second">செந்தூர் பாண்டியன் உலகம்</p>
+    <div class="curved-note">மரபு · அன்பு · ஒற்றுமை</div>
+    <div class="english-phase" aria-hidden="true">
+      <div class="english-symbol">🤝</div>
+      <h2 class="english-title"><span>Welcome</span></h2>
+      <div class="english-sub">Welcome to Sendhur Pandian World</div>
+    </div>
+  </div>
+  <div class="intro-controls"><button class="small-action" id="skipIntro">Skip intro ↗</button><button class="small-action" id="replayIntro" type="button">↻ Replay</button></div>
+</section>
+<div id="circleReveal" aria-hidden="true"></div>
+<div id="portal">
+  <header class="topbar">
+    <div class="brand"><div class="brand-mark">வ</div><div class="brand-text"><strong id="brandTamil">செந்தூர் பாண்டியன் உலகம்</strong><span>SENDHUR PANDIAN ULAGAM</span></div></div>
+    <div class="top-actions"><select class="lang" id="language" aria-label="Choose language"><option value="ta">தமிழ்</option><option value="en">English</option></select></div>
+  </header>
+  <main id="main">
+    <section class="hero">
+      <svg class="hero-art" viewBox="0 0 240 240" aria-hidden="true"><defs><linearGradient id="heroLine" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0c7"/><stop offset=".5" stop-color="#d4c3ff"/><stop offset="1" stop-color="#8b72ff"/></linearGradient></defs><g fill="none" stroke="url(#heroLine)" stroke-width="2"><circle cx="120" cy="120" r="82" stroke-dasharray="3 8"/><path d="M120 38 C150 68 150 92 120 108 C90 92 90 68 120 38Z"/><path d="M120 202 C150 172 150 148 120 132 C90 148 90 172 120 202Z"/><path d="M38 120 C68 90 92 90 108 120 C92 150 68 150 38 120Z"/><path d="M202 120 C172 90 148 90 132 120 C148 150 172 150 202 120Z"/><path d="M63 63 C93 58 105 83 120 105 C135 83 147 58 177 63 C182 93 157 105 135 120 C157 135 182 147 177 177 C147 182 135 157 120 135 C105 157 93 182 63 177 C58 147 83 135 105 120 C83 105 58 93 63 63Z"/></g><circle cx="120" cy="120" r="24" fill="#17102c" stroke="#f1d9a7"/><text x="120" y="128" text-anchor="middle" font-size="22" font-family="Noto Sans Tamil,sans-serif" fill="#fff0cc">வ</text></svg>
+      <div class="eyebrow" id="eyebrow">தமிழர் மரபும் புதிய அனுபவமும்</div>
+      <h1 id="heroTitle"><span class="gradient">வணக்கம்!</span><br>செந்தூர் பாண்டியன் உலகத்திற்கு வரவேற்கிறோம்</h1>
+      <p id="heroText">நம் மரபின் பெருமை, அன்பின் இணைப்பு, புதிய உலகின் தொடக்கம் — உங்களை அன்புடன் வரவேற்கிறோம்.</p>
+      <div class="actions"><button class="btn primary" id="startBtn">பயணத்தைத் தொடங்குங்கள்&nbsp; →</button><button class="btn secondary" id="loginBtn">உள்நுழைய</button><button class="btn secondary" id="replayBtn">மீண்டும் வரவேற்பைப் பார்க்க ↻</button></div>
+      <div class="trust-row"><span>✦ தமிழ் & English</span><span>✦ பாரம்பரியம் + தொழில்நுட்பம்</span><span>✦ Mobile ready</span></div>
+    </section>
+  </main>
+  <footer class="footer" id="footer">செந்தூர் பாண்டியன் உலகம் · ஒரு முன்மாதிரி இணைய அனுபவம்</footer>
+</div>
+<script>
+(() => {
+ const intro=document.getElementById('intro'), portal=document.getElementById('portal'), reveal=document.getElementById('circleReveal');
+ const main=document.getElementById('main'); let lang='ta', introTimers=[], introFinished=false;
+ const reduced=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ function clearIntroTimers(){introTimers.forEach(clearTimeout);introTimers=[]}
+ function playIntro(){
+   clearIntroTimers();introFinished=false;intro.classList.remove('english','leaving');intro.style.display='grid';intro.style.opacity='1';
+   portal.classList.remove('visible');portal.style.display='flex';reveal.classList.remove('go');
+   if(reduced()){introTimers.push(setTimeout(showPortal,500));return}
+   // Let the complete Tamil and English intro animation finish before showing language selection (30s total).
+   introTimers.push(setTimeout(()=>intro.classList.add('english'),15000));
+   introTimers.push(setTimeout(()=>intro.classList.remove('english'),25000));
+   introTimers.push(setTimeout(showPortal,30000));
+ }
+ function showPortal(){
+   if(introFinished)return;introFinished=true;
+   const x=50,y=50;reveal.style.setProperty('--x',x+'%');reveal.style.setProperty('--y',y+'%');
+   if(!reduced()){reveal.classList.remove('go');void reveal.offsetWidth;reveal.classList.add('go')}
+   intro.classList.add('leaving');portal.classList.add('visible');
+   renderLanguageStep();
+   introTimers.push(setTimeout(()=>{intro.style.display='none';reveal.classList.remove('go')},reduced()?20:1000));
+ }
+ document.getElementById('skipIntro').addEventListener('click',showPortal);
+ document.getElementById('replayIntro').addEventListener('click',playIntro);
+ document.getElementById('replayBtn').addEventListener('click',playIntro);
+ const copy={
+  ta:{brand:'செந்தூர் பாண்டியன் உலகம்',eyebrow:'தமிழர் மரபும் புதிய அனுபவமும்',title:'<span class="gradient">வணக்கம்!</span><br>செந்தூர் பாண்டியன் உலகத்திற்கு வரவேற்கிறோம்',text:'நம் மரபின் பெருமை, அன்பின் இணைப்பு, புதிய உலகின் தொடக்கம் — உங்களை அன்புடன் வரவேற்கிறோம்.',start:'பயணத்தைத் தொடங்குங்கள்&nbsp; →',login:'உள்நுழைய',replay:'மீண்டும் வரவேற்பைப் பார்க்க ↻',footer:'செந்தூர் பாண்டியன் உலகம் · ஒரு முன்மாதிரி இணைய அனுபவம்',kicker:'தமிழர் மரபும் புதிய அனுபவமும்'},
+  en:{brand:'Sendhur Pandian World',eyebrow:'Tamil heritage. A new experience.',title:'<span class="gradient">Vanakkam!</span><br>Welcome to Sendhur Pandian World',text:'Rooted in tradition, connected by kindness, and looking toward a new world. You are warmly welcome here.',start:'Begin your journey&nbsp; →',login:'Log in',replay:'Replay welcome ↻',footer:'Sendhur Pandian World · Website prototype',kicker:'Tamil heritage. A new experience.'}
+ };
+ function setLanguage(next){
+  lang=next;document.documentElement.lang=lang;
+  const topLanguage=document.getElementById('language');if(topLanguage)topLanguage.value=lang;
+  const c=copy[lang];
+  const brand=document.getElementById('brandTamil');if(brand)brand.textContent=c.brand;
+  const eyebrow=document.getElementById('eyebrow');if(eyebrow)eyebrow.textContent=c.eyebrow;
+  const heroTitle=document.getElementById('heroTitle');if(heroTitle)heroTitle.innerHTML=c.title;
+  const heroText=document.getElementById('heroText');if(heroText)heroText.textContent=c.text;
+  const startBtn=document.getElementById('startBtn');if(startBtn)startBtn.innerHTML=c.start;
+  const loginBtn=document.getElementById('loginBtn');if(loginBtn)loginBtn.textContent=c.login;
+  const replayBtn=document.getElementById('replayBtn');if(replayBtn)replayBtn.textContent=c.replay;
+  const footer=document.getElementById('footer');if(footer)footer.textContent=c.footer;
+}
+ document.getElementById('language').addEventListener('change',e=>setLanguage(e.target.value));
+
+ function stepDots(active){
+  return `<div class="step-dots" aria-label="Setup progress"><span class="step-dot ${active>=1?'active':''}"></span><span class="step-dot ${active>=2?'active':''}"></span><span class="step-dot ${active>=3?'active':''}"></span></div>`;
+ }
+ function renderLanguageStep(){
+  main.innerHTML=`<section class="screen">
+   ${stepDots(1)}
+   <div class="eyebrow">${lang==='ta'?'முதல் படி · மொழியைத் தேர்ந்தெடுக்கவும்':'STEP 1 · CHOOSE YOUR LANGUAGE'}</div>
+   <h2>${lang==='ta'?'உங்கள் மொழி, உங்கள் உலகம்':'Choose your language'}</h2>
+   <p>${lang==='ta'?'உங்களுக்கு வசதியான மொழியைத் தேர்ந்தெடுக்கவும். அடுத்த படியில் பிறந்த தேதி மற்றும் பாலினத்தைத் தேர்வு செய்யலாம்.':'Select the language you prefer. Next, you’ll enter your date of birth and gender.'}</p>
+   <div class="choice-grid">
+    <button type="button" class="choice-card ${lang==='ta'?'selected':''}" id="chooseTamil"><span class="choice-icon">தமிழ்</span><strong>தமிழ்</strong><small>தமிழில் தொடரவும்</small></button>
+    <button type="button" class="choice-card ${lang==='en'?'selected':''}" id="chooseEnglish"><span class="choice-icon">Aa</span><strong>English</strong><small>Continue in English</small></button>
+   </div>
+   <div class="step-actions"><button class="btn primary" id="languageContinue">${lang==='ta'?'தொடரவும் →':'Continue →'}</button></div>
+   <p style="font-size:.75rem;text-align:center">${lang==='ta'?'மொழியை பின்னரும் மாற்றலாம்.':'You can change your language later.'}</p>
+  </section>`;
+  document.getElementById('chooseTamil').onclick=()=>{setLanguage('ta');renderLanguageStep()};
+  document.getElementById('chooseEnglish').onclick=()=>{setLanguage('en');renderLanguageStep()};
+  document.getElementById('languageContinue').onclick=renderProfileStep;
+ }
+ function renderProfileStep(){
+  main.innerHTML=`<section class="screen">
+   <button class="back" id="profileBack">← ${lang==='ta'?'மொழிக்குத் திரும்பு':'Back to language'}</button>
+   ${stepDots(2)}
+   <div class="eyebrow">${lang==='ta'?'இரண்டாம் படி · உங்கள் விவரங்கள்':'STEP 2 · ABOUT YOU'}</div>
+   <h2>${lang==='ta'?'உங்களைப் பற்றி சொல்லுங்கள்':'A little about you'}</h2>
+   <p>${lang==='ta'?'உங்கள் பிறந்த தேதி மற்றும் பாலினத்தைத் தேர்வு செய்யவும். இந்த முன்மாதிரியில் விவரங்கள் சேமிக்கப்படாது.':'Choose your date of birth and gender. This prototype does not save your details.'}</p>
+   <form class="form" id="profileForm">
+    <div class="field"><label for="dob">${lang==='ta'?'பிறந்த தேதி':'Date of birth'}</label><input id="dob" type="date" max="${new Date().toISOString().slice(0,10)}" required></div>
+    <div class="field"><label>${lang==='ta'?'பாலினம்':'Gender'}</label>
+     <div class="gender-options">
+      <label class="gender-option"><input type="radio" name="gender" value="female" required> ${lang==='ta'?'பெண்':'Female'}</label>
+      <label class="gender-option"><input type="radio" name="gender" value="male"> ${lang==='ta'?'ஆண்':'Male'}</label>
+      <label class="gender-option"><input type="radio" name="gender" value="nonbinary"> ${lang==='ta'?'பிற அடையாளம்':'Another identity'}</label>
+      <label class="gender-option"><input type="radio" name="gender" value="prefer-not"> ${lang==='ta'?'சொல்ல விரும்பவில்லை':'Prefer not to say'}</label>
+     </div>
+    </div>
+    <div class="form-error" id="profileError" aria-live="polite"></div>
+    <div class="step-actions"><button class="btn primary" type="submit">${lang==='ta'?'தொடரவும் →':'Continue →'}</button></div>
+   </form>
+  </section>`;
+  document.getElementById('profileBack').onclick=renderLanguageStep;
+  document.getElementById('profileForm').onsubmit=e=>{
+   e.preventDefault();
+   const dob=document.getElementById('dob').value;
+   const age=Math.floor((Date.now()-new Date(dob+'T00:00:00').getTime())/(365.2425*24*60*60*1000));
+   if(!dob || age<0){document.getElementById('profileError').textContent=lang==='ta'?'சரியான பிறந்த தேதியைத் தேர்வு செய்யவும்.':'Please choose a valid date of birth.';return}
+   // Keep the flow respectful: users under 18 see a guardian-information step before account options.
+   if(age<18){renderGuardianStep();return}
+   renderAuthChoice();
+  };
+ }
+ function renderGuardianStep(){
+  main.innerHTML=`<section class="screen">
+   <button class="back" id="guardianBack">← ${lang==='ta'?'பிறந்த தேதி விவரத்திற்குத் திரும்பு':'Back to your details'}</button>
+   ${stepDots(2)}
+   <div class="eyebrow">${lang==='ta'?'பாதுகாப்பான அனுபவம்':'SAFETY FIRST'}</div>
+   <h2>${lang==='ta'?'பெற்றோர் அல்லது பாதுகாவலரின் உதவி':'A parent or guardian should help'}</h2>
+   <p>${lang==='ta'?'நீங்கள் 18 வயதிற்குக் குறைவானவராகத் தேர்ந்தெடுத்துள்ளீர்கள். கணக்கு உருவாக்குவதற்கு முன் பெற்றோர் அல்லது பாதுகாவலருடன் தொடரவும்.':'Your selected date of birth indicates you are under 18. Please continue with a parent or guardian before creating an account.'}</p>
+   <div class="step-actions"><button class="btn primary" id="guardianContinue">${lang==='ta'?'தொடரவும் →':'Continue with guardian →'}</button></div>
+   <p style="font-size:.75rem">⚠ ${lang==='ta'?'இது முன்மாதிரி வழிகாட்டல் மட்டுமே; வயது சரிபார்ப்பு அல்லது பெற்றோர் ஒப்புதல் அமைப்பு இணைக்கப்படவில்லை.':'Prototype guidance only; age verification and parental consent are not connected.'}</p>
+  </section>`;
+  document.getElementById('guardianBack').onclick=renderProfileStep;
+  document.getElementById('guardianContinue').onclick=renderAuthChoice;
+ }
+ function renderAuthChoice(){
+  main.innerHTML=`<section class="screen">
+   <button class="back" id="authBack">← ${lang==='ta'?'முந்தைய படிக்குத் திரும்பு':'Back to previous step'}</button>
+   ${stepDots(3)}
+   <div class="eyebrow">${lang==='ta'?'மூன்றாம் படி · உங்கள் கணக்கு':'STEP 3 · YOUR ACCOUNT'}</div>
+   <h2>${lang==='ta'?'எப்படி தொடர விரும்புகிறீர்கள்?':'How would you like to continue?'}</h2>
+   <p>${lang==='ta'?'ஏற்கனவே கணக்கு இருந்தால் உள்நுழையவும்; இல்லையெனில் புதிய கணக்கை உருவாக்கவும்.':'Log in if you already have an account, or create a new one.'}</p>
+   <div class="step-actions"><button class="btn primary" id="createAccount">${lang==='ta'?'புதிய கணக்கை உருவாக்கு':'Create an account'} →</button><button class="btn secondary" id="loginAccount">${lang==='ta'?'ஏற்கனவே கணக்கு உள்ளது · உள்நுழை':'I already have an account · Log in'}</button></div>
+   <p style="font-size:.75rem">⚠ ${lang==='ta'?'முன்மாதிரி: உண்மையான உள்நுழைவு அல்லது கணக்கு சேமிப்பு இன்னும் இணைக்கப்படவில்லை.':'Prototype only: real login and account storage are not connected yet.'}</p>
+  </section>`;
+  document.getElementById('authBack').onclick=renderProfileStep;
+  document.getElementById('createAccount').onclick=()=>showForm('register');
+  document.getElementById('loginAccount').onclick=()=>showForm('login');
+ }
+ function showForm(type){
+  const register=type==='register';
+  main.innerHTML=`<section class="screen"><button class="back" id="backBtn">← ${lang==='ta'?'கணக்கு தேர்வுக்குத் திரும்பு':'Back to account options'}</button><div class="eyebrow">${register?(lang==='ta'?'புதிய கணக்கு':'CREATE ACCOUNT'):(lang==='ta'?'மீண்டும் வருக':'WELCOME BACK')}</div><h2>${register?(lang==='ta'?'உங்கள் கணக்கை உருவாக்குங்கள்':'Create your account'):(lang==='ta'?'மீண்டும் வருக!':'Welcome back.')}</h2><p>${register?(lang==='ta'?'உங்கள் பெயர், மின்னஞ்சல் மற்றும் கடவுச்சொல்லை உள்ளிடவும்.':'Enter your name, email, and password to preview account creation.'):(lang==='ta'?'உங்கள் கணக்கில் தொடர உள்நுழையவும்.':'Log in to continue your experience.')}</p><form class="form" id="accountForm">${register?`<div class="field"><label for="name">${lang==='ta'?'பெயர்':'Name'}</label><input id="name" autocomplete="name" placeholder="${lang==='ta'?'உங்கள் பெயர்':'Your name'}" required></div>`:''}<div class="field"><label for="email">${lang==='ta'?'மின்னஞ்சல்':'Email address'}</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com" required></div><div class="field"><label for="password">${lang==='ta'?'கடவுச்சொல்':'Password'}</label><input id="password" type="password" autocomplete="${register?'new-password':'current-password'}" minlength="8" placeholder="${lang==='ta'?'குறைந்தது 8 எழுத்துகள்':'At least 8 characters'}" required></div><div class="form-error" id="error" aria-live="polite"></div><button class="btn primary" type="submit">${register?(lang==='ta'?'கணக்கை உருவாக்கு':'Create account'):(lang==='ta'?'உள்நுழைய':'Log in')} →</button><button class="btn secondary" type="button" id="switchForm">${register?(lang==='ta'?'ஏற்கனவே கணக்கு உள்ளதா? உள்நுழைய':'Already have an account? Log in'):(lang==='ta'?'புதியவரா? கணக்கை உருவாக்கு':'New here? Create an account')}</button></form><p style="font-size:.75rem">⚠ ${lang==='ta'?'இது முன்மாதிரி மட்டுமே. உங்கள் தகவல்கள் அனுப்பப்படவோ சேமிக்கப்படவோ இல்லை.':'Prototype only. Your details are not sent or stored.'}</p></section>`;
+  document.getElementById('backBtn').onclick=renderAuthChoice;
+  document.getElementById('switchForm').onclick=()=>showForm(register?'login':'register');
+  document.getElementById('accountForm').onsubmit=e=>{e.preventDefault();const pass=document.getElementById('password');const err=document.getElementById('error');if(!pass.checkValidity()){err.textContent=lang==='ta'?'கடவுச்சொல் குறைந்தது 8 எழுத்துகள் இருக்க வேண்டும்.':'Password must be at least 8 characters.';return;}err.textContent=lang==='ta'?'முன்மாதிரி சரிபார்ப்பு முடிந்தது. கணக்கு உருவாக்கப்படவில்லை.':'Demo validation complete. No account was created.';};
+ }
+ function renderHome(){main.innerHTML=`<section class="hero"><svg class="hero-art" viewBox="0 0 240 240" aria-hidden="true"><circle cx="120" cy="120" r="86" fill="none" stroke="#d6c3ff" stroke-width="2" stroke-dasharray="3 8"/><path d="M120 35 C150 65 150 92 120 108 C90 92 90 65 120 35 M120 205 C150 175 150 148 120 132 C90 148 90 175 120 205 M35 120 C65 90 92 90 108 120 C92 150 65 150 35 120 M205 120 C175 90 148 90 132 120 C148 150 175 150 205 120" fill="none" stroke="#f1d9a7" stroke-width="2"/><circle cx="120" cy="120" r="24" fill="#17102c" stroke="#f1d9a7"/><text x="120" y="128" text-anchor="middle" font-size="22" fill="#fff0cc" font-family="Noto Sans Tamil">வ</text></svg><div class="eyebrow" id="eyebrow"></div><h1 id="heroTitle"></h1><p id="heroText"></p><div class="actions"><button class="btn primary" id="startBtn"></button><button class="btn secondary" id="loginBtn"></button><button class="btn secondary" id="replayBtn"></button></div><div class="trust-row"><span>✦ தமிழ் & English</span><span>✦ பாரம்பரியம் + தொழில்நுட்பம்</span><span>✦ Mobile ready</span></div></section>`;setLanguage(lang);document.getElementById('startBtn').onclick=()=>renderLanguageStep();document.getElementById('loginBtn').onclick=()=>renderLanguageStep();document.getElementById('replayBtn').onclick=playIntro;}
+ setLanguage('ta');playIntro();
+})();
+</script>
+</body>
+</html>
