@@ -139,10 +139,10 @@ main{flex:1;display:grid;place-items:center;padding:22px 18px 50px}.hero{width:m
    clearIntroTimers();introFinished=false;intro.classList.remove('english','leaving');intro.style.display='grid';intro.style.opacity='1';
    portal.classList.remove('visible');portal.style.display='flex';reveal.classList.remove('go');
    if(reduced()){introTimers.push(setTimeout(showPortal,500));return}
-   // Tamil 0–5s, English 5–10s, Tamil again 10–15s, then reveal the site.
-   introTimers.push(setTimeout(()=>intro.classList.add('english'),5000));
-   introTimers.push(setTimeout(()=>intro.classList.remove('english'),10000));
-   introTimers.push(setTimeout(showPortal,15000));
+   // Tamil starts first; English appears briefly at 2.5s, Tamil returns at 3.8s, and the next page opens at 5s.
+   introTimers.push(setTimeout(()=>intro.classList.add('english'),2500));
+   introTimers.push(setTimeout(()=>intro.classList.remove('english'),3800));
+   introTimers.push(setTimeout(showPortal,5000));
  }
  function showPortal(){
    if(introFinished)return;introFinished=true;
