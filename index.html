@@ -54,6 +54,22 @@ main{flex:1;display:grid;place-items:center;padding:22px 18px 50px}.hero{width:m
 .btn{min-height:51px;border-radius:14px;padding:13px 21px;font-weight:800;border:1px solid transparent;transition:transform .2s,filter .2s,background .2s}.btn:hover{transform:translateY(-2px);filter:brightness(1.1)}.primary{color:white;background:linear-gradient(110deg,#8c6bff,#6042d8);box-shadow:0 12px 28px #6f51e54d}.secondary{background:#ffffff08;border-color:#51436e;color:#eee7ff}
 .trust-row{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;color:#827894;font-size:.7rem;margin-top:26px}
 .footer{padding:0 18px 24px;text-align:center;color:#6f6684;font-size:.7rem}
+
+.step-dots{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 22px}
+.step-dot{width:8px;height:8px;border-radius:99px;background:#51436e}
+.step-dot.active{width:25px;background:linear-gradient(90deg,#9b7cff,#f3d7a0)}
+.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0}
+.choice-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;min-height:120px;padding:18px 12px;border:1px solid #403653;border-radius:17px;background:#0b0815;color:#f7f2ff;text-align:center}
+.choice-card .choice-icon{font-size:1.8rem}
+.choice-card small{color:#a9a0c2;font-size:.75rem}
+.choice-card.selected{border-color:#a991ff;background:linear-gradient(145deg,#5d43a533,#171229);box-shadow:0 0 0 2px #8c72ff20}
+.field select,.field input[type=date]{width:100%;background:#0b0815;border:1px solid #403653;border-radius:12px;padding:14px;color:white;min-height:49px}
+.gender-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.gender-option{display:flex;align-items:center;gap:9px;border:1px solid #403653;border-radius:12px;padding:13px;background:#0b0815;color:#e5def5;font-size:.9rem}
+.gender-option:has(input:checked){border-color:#a991ff;background:#8c72ff17}
+.step-actions{display:grid;gap:10px;margin-top:22px}
+@media(max-width:420px){.choice-grid{grid-template-columns:1fr}.choice-card{min-height:86px;flex-direction:row;justify-content:flex-start;padding:15px}.choice-card .choice-icon{font-size:1.5rem}.gender-options{grid-template-columns:1fr}}
+
 .screen{width:min(100%,550px);border:1px solid #403357;border-radius:26px;background:linear-gradient(145deg,#181229,#100c1e);padding:clamp(23px,5vw,42px);box-shadow:0 25px 80px #0005}.screen h2{font-size:clamp(1.8rem,6vw,2.5rem);margin:8px 0 12px;letter-spacing:-.05em}.screen p{color:var(--muted);line-height:1.7}.form{display:grid;gap:16px;margin-top:22px}.field{display:grid;gap:7px}.field label{font-size:.85rem;color:#e5def5;font-weight:700}.field input{width:100%;background:#0b0815;border:1px solid #403653;border-radius:12px;padding:14px;color:white}.field input::placeholder{color:#706780}.form-error{min-height:1.2em;color:#ffb8c1;font-size:.8rem}.back{background:none;border:0;color:#c7b8ff;padding:8px 0;margin-bottom:10px}
 #circleReveal{position:fixed;z-index:80;inset:0;pointer-events:none;background:radial-gradient(circle at var(--x,50%) var(--y,50%),#c3aaff 0,#7654ec 35%,#090714 72%);clip-path:circle(0 at var(--x,50%) var(--y,50%));opacity:1}
 #circleReveal.go{animation:circleOpen .95s cubic-bezier(.76,0,.24,1) forwards}
@@ -133,6 +149,7 @@ main{flex:1;display:grid;place-items:center;padding:22px 18px 50px}.hero{width:m
    const x=50,y=50;reveal.style.setProperty('--x',x+'%');reveal.style.setProperty('--y',y+'%');
    if(!reduced()){reveal.classList.remove('go');void reveal.offsetWidth;reveal.classList.add('go')}
    intro.classList.add('leaving');portal.classList.add('visible');
+   renderLanguageStep();
    introTimers.push(setTimeout(()=>{intro.style.display='none';reveal.classList.remove('go')},reduced()?20:1000));
  }
  document.getElementById('skipIntro').addEventListener('click',showPortal);
@@ -142,17 +159,108 @@ main{flex:1;display:grid;place-items:center;padding:22px 18px 50px}.hero{width:m
   ta:{brand:'செந்தூர் பாண்டியன் உலகம்',eyebrow:'தமிழர் மரபும் புதிய அனுபவமும்',title:'<span class="gradient">வணக்கம்!</span><br>செந்தூர் பாண்டியன் உலகத்திற்கு வரவேற்கிறோம்',text:'நம் மரபின் பெருமை, அன்பின் இணைப்பு, புதிய உலகின் தொடக்கம் — உங்களை அன்புடன் வரவேற்கிறோம்.',start:'பயணத்தைத் தொடங்குங்கள்&nbsp; →',login:'உள்நுழைய',replay:'மீண்டும் வரவேற்பைப் பார்க்க ↻',footer:'செந்தூர் பாண்டியன் உலகம் · ஒரு முன்மாதிரி இணைய அனுபவம்',kicker:'தமிழர் மரபும் புதிய அனுபவமும்'},
   en:{brand:'Sendhur Pandian World',eyebrow:'Tamil heritage. A new experience.',title:'<span class="gradient">Vanakkam!</span><br>Welcome to Sendhur Pandian World',text:'Rooted in tradition, connected by kindness, and looking toward a new world. You are warmly welcome here.',start:'Begin your journey&nbsp; →',login:'Log in',replay:'Replay welcome ↻',footer:'Sendhur Pandian World · Website prototype',kicker:'Tamil heritage. A new experience.'}
  };
- function setLanguage(next){lang=next;document.documentElement.lang=lang;const c=copy[lang];document.getElementById('brandTamil').textContent=c.brand;document.getElementById('eyebrow').textContent=c.eyebrow;document.getElementById('heroTitle').innerHTML=c.title;document.getElementById('heroText').textContent=c.text;document.getElementById('startBtn').innerHTML=c.start;document.getElementById('loginBtn').textContent=c.login;document.getElementById('replayBtn').textContent=c.replay;document.getElementById('footer').textContent=c.footer;}
+ function setLanguage(next){
+  lang=next;document.documentElement.lang=lang;
+  const topLanguage=document.getElementById('language');if(topLanguage)topLanguage.value=lang;
+  const c=copy[lang];
+  const brand=document.getElementById('brandTamil');if(brand)brand.textContent=c.brand;
+  const eyebrow=document.getElementById('eyebrow');if(eyebrow)eyebrow.textContent=c.eyebrow;
+  const heroTitle=document.getElementById('heroTitle');if(heroTitle)heroTitle.innerHTML=c.title;
+  const heroText=document.getElementById('heroText');if(heroText)heroText.textContent=c.text;
+  const startBtn=document.getElementById('startBtn');if(startBtn)startBtn.innerHTML=c.start;
+  const loginBtn=document.getElementById('loginBtn');if(loginBtn)loginBtn.textContent=c.login;
+  const replayBtn=document.getElementById('replayBtn');if(replayBtn)replayBtn.textContent=c.replay;
+  const footer=document.getElementById('footer');if(footer)footer.textContent=c.footer;
+}
  document.getElementById('language').addEventListener('change',e=>setLanguage(e.target.value));
+
+ function stepDots(active){
+  return `<div class="step-dots" aria-label="Setup progress"><span class="step-dot ${active>=1?'active':''}"></span><span class="step-dot ${active>=2?'active':''}"></span><span class="step-dot ${active>=3?'active':''}"></span></div>`;
+ }
+ function renderLanguageStep(){
+  main.innerHTML=`<section class="screen">
+   ${stepDots(1)}
+   <div class="eyebrow">${lang==='ta'?'முதல் படி · மொழியைத் தேர்ந்தெடுக்கவும்':'STEP 1 · CHOOSE YOUR LANGUAGE'}</div>
+   <h2>${lang==='ta'?'உங்கள் மொழி, உங்கள் உலகம்':'Choose your language'}</h2>
+   <p>${lang==='ta'?'உங்களுக்கு வசதியான மொழியைத் தேர்ந்தெடுக்கவும். அடுத்த படியில் பிறந்த தேதி மற்றும் பாலினத்தைத் தேர்வு செய்யலாம்.':'Select the language you prefer. Next, you’ll enter your date of birth and gender.'}</p>
+   <div class="choice-grid">
+    <button type="button" class="choice-card ${lang==='ta'?'selected':''}" id="chooseTamil"><span class="choice-icon">தமிழ்</span><strong>தமிழ்</strong><small>தமிழில் தொடரவும்</small></button>
+    <button type="button" class="choice-card ${lang==='en'?'selected':''}" id="chooseEnglish"><span class="choice-icon">Aa</span><strong>English</strong><small>Continue in English</small></button>
+   </div>
+   <div class="step-actions"><button class="btn primary" id="languageContinue">${lang==='ta'?'தொடரவும் →':'Continue →'}</button></div>
+   <p style="font-size:.75rem;text-align:center">${lang==='ta'?'மொழியை பின்னரும் மாற்றலாம்.':'You can change your language later.'}</p>
+  </section>`;
+  document.getElementById('chooseTamil').onclick=()=>{setLanguage('ta');renderLanguageStep()};
+  document.getElementById('chooseEnglish').onclick=()=>{setLanguage('en');renderLanguageStep()};
+  document.getElementById('languageContinue').onclick=renderProfileStep;
+ }
+ function renderProfileStep(){
+  main.innerHTML=`<section class="screen">
+   <button class="back" id="profileBack">← ${lang==='ta'?'மொழிக்குத் திரும்பு':'Back to language'}</button>
+   ${stepDots(2)}
+   <div class="eyebrow">${lang==='ta'?'இரண்டாம் படி · உங்கள் விவரங்கள்':'STEP 2 · ABOUT YOU'}</div>
+   <h2>${lang==='ta'?'உங்களைப் பற்றி சொல்லுங்கள்':'A little about you'}</h2>
+   <p>${lang==='ta'?'உங்கள் பிறந்த தேதி மற்றும் பாலினத்தைத் தேர்வு செய்யவும். இந்த முன்மாதிரியில் விவரங்கள் சேமிக்கப்படாது.':'Choose your date of birth and gender. This prototype does not save your details.'}</p>
+   <form class="form" id="profileForm">
+    <div class="field"><label for="dob">${lang==='ta'?'பிறந்த தேதி':'Date of birth'}</label><input id="dob" type="date" max="${new Date().toISOString().slice(0,10)}" required></div>
+    <div class="field"><label>${lang==='ta'?'பாலினம்':'Gender'}</label>
+     <div class="gender-options">
+      <label class="gender-option"><input type="radio" name="gender" value="female" required> ${lang==='ta'?'பெண்':'Female'}</label>
+      <label class="gender-option"><input type="radio" name="gender" value="male"> ${lang==='ta'?'ஆண்':'Male'}</label>
+      <label class="gender-option"><input type="radio" name="gender" value="nonbinary"> ${lang==='ta'?'பிற அடையாளம்':'Another identity'}</label>
+      <label class="gender-option"><input type="radio" name="gender" value="prefer-not"> ${lang==='ta'?'சொல்ல விரும்பவில்லை':'Prefer not to say'}</label>
+     </div>
+    </div>
+    <div class="form-error" id="profileError" aria-live="polite"></div>
+    <div class="step-actions"><button class="btn primary" type="submit">${lang==='ta'?'தொடரவும் →':'Continue →'}</button></div>
+   </form>
+  </section>`;
+  document.getElementById('profileBack').onclick=renderLanguageStep;
+  document.getElementById('profileForm').onsubmit=e=>{
+   e.preventDefault();
+   const dob=document.getElementById('dob').value;
+   const age=Math.floor((Date.now()-new Date(dob+'T00:00:00').getTime())/(365.2425*24*60*60*1000));
+   if(!dob || age<0){document.getElementById('profileError').textContent=lang==='ta'?'சரியான பிறந்த தேதியைத் தேர்வு செய்யவும்.':'Please choose a valid date of birth.';return}
+   // Keep the flow respectful: users under 18 see a guardian-information step before account options.
+   if(age<18){renderGuardianStep();return}
+   renderAuthChoice();
+  };
+ }
+ function renderGuardianStep(){
+  main.innerHTML=`<section class="screen">
+   <button class="back" id="guardianBack">← ${lang==='ta'?'பிறந்த தேதி விவரத்திற்குத் திரும்பு':'Back to your details'}</button>
+   ${stepDots(2)}
+   <div class="eyebrow">${lang==='ta'?'பாதுகாப்பான அனுபவம்':'SAFETY FIRST'}</div>
+   <h2>${lang==='ta'?'பெற்றோர் அல்லது பாதுகாவலரின் உதவி':'A parent or guardian should help'}</h2>
+   <p>${lang==='ta'?'நீங்கள் 18 வயதிற்குக் குறைவானவராகத் தேர்ந்தெடுத்துள்ளீர்கள். கணக்கு உருவாக்குவதற்கு முன் பெற்றோர் அல்லது பாதுகாவலருடன் தொடரவும்.':'Your selected date of birth indicates you are under 18. Please continue with a parent or guardian before creating an account.'}</p>
+   <div class="step-actions"><button class="btn primary" id="guardianContinue">${lang==='ta'?'தொடரவும் →':'Continue with guardian →'}</button></div>
+   <p style="font-size:.75rem">⚠ ${lang==='ta'?'இது முன்மாதிரி வழிகாட்டல் மட்டுமே; வயது சரிபார்ப்பு அல்லது பெற்றோர் ஒப்புதல் அமைப்பு இணைக்கப்படவில்லை.':'Prototype guidance only; age verification and parental consent are not connected.'}</p>
+  </section>`;
+  document.getElementById('guardianBack').onclick=renderProfileStep;
+  document.getElementById('guardianContinue').onclick=renderAuthChoice;
+ }
+ function renderAuthChoice(){
+  main.innerHTML=`<section class="screen">
+   <button class="back" id="authBack">← ${lang==='ta'?'முந்தைய படிக்குத் திரும்பு':'Back to previous step'}</button>
+   ${stepDots(3)}
+   <div class="eyebrow">${lang==='ta'?'மூன்றாம் படி · உங்கள் கணக்கு':'STEP 3 · YOUR ACCOUNT'}</div>
+   <h2>${lang==='ta'?'எப்படி தொடர விரும்புகிறீர்கள்?':'How would you like to continue?'}</h2>
+   <p>${lang==='ta'?'ஏற்கனவே கணக்கு இருந்தால் உள்நுழையவும்; இல்லையெனில் புதிய கணக்கை உருவாக்கவும்.':'Log in if you already have an account, or create a new one.'}</p>
+   <div class="step-actions"><button class="btn primary" id="createAccount">${lang==='ta'?'புதிய கணக்கை உருவாக்கு':'Create an account'} →</button><button class="btn secondary" id="loginAccount">${lang==='ta'?'ஏற்கனவே கணக்கு உள்ளது · உள்நுழை':'I already have an account · Log in'}</button></div>
+   <p style="font-size:.75rem">⚠ ${lang==='ta'?'முன்மாதிரி: உண்மையான உள்நுழைவு அல்லது கணக்கு சேமிப்பு இன்னும் இணைக்கப்படவில்லை.':'Prototype only: real login and account storage are not connected yet.'}</p>
+  </section>`;
+  document.getElementById('authBack').onclick=renderProfileStep;
+  document.getElementById('createAccount').onclick=()=>showForm('register');
+  document.getElementById('loginAccount').onclick=()=>showForm('login');
+ }
  function showForm(type){
   const register=type==='register';
-  main.innerHTML=`<section class="screen"><button class="back" id="backBtn">← ${lang==='ta'?'முகப்புக்குத் திரும்பு':'Back to welcome'}</button><div class="eyebrow">${register?(lang==='ta'?'புதிய கணக்கு':'CREATE ACCOUNT'):(lang==='ta'?'மீண்டும் வருக':'WELCOME BACK')}</div><h2>${register?(lang==='ta'?'உங்கள் பயணத்தைத் தொடங்குங்கள்':'Start your journey'):(lang==='ta'?'மீண்டும் வருக!':'Welcome back.')}</h2><p>${register?(lang==='ta'?'முன்மாதிரி கணக்கை உருவாக்க உங்கள் விவரங்களை உள்ளிடவும்.':'Enter your details to preview account creation.'):(lang==='ta'?'உங்கள் கணக்கில் தொடர உள்நுழையவும்.':'Log in to continue your experience.')}</p><form class="form" id="accountForm">${register?`<div class="field"><label for="name">${lang==='ta'?'பெயர்':'Name'}</label><input id="name" placeholder="${lang==='ta'?'உங்கள் பெயர்':'Your name'}" required></div>`:''}<div class="field"><label for="email">${lang==='ta'?'மின்னஞ்சல்':'Email address'}</label><input id="email" type="email" placeholder="you@example.com" required></div><div class="field"><label for="password">${lang==='ta'?'கடவுச்சொல்':'Password'}</label><input id="password" type="password" minlength="8" placeholder="${lang==='ta'?'குறைந்தது 8 எழுத்துகள்':'At least 8 characters'}" required></div><div class="form-error" id="error" aria-live="polite"></div><button class="btn primary" type="submit">${register?(lang==='ta'?'கணக்கை உருவாக்கு':'Create account'):(lang==='ta'?'உள்நுழைய':'Log in')} →</button><button class="btn secondary" type="button" id="switchForm">${register?(lang==='ta'?'ஏற்கனவே கணக்கு உள்ளதா? உள்நுழைய':'Already have an account? Log in'):(lang==='ta'?'புதியவரா? கணக்கை உருவாக்கு':'New here? Create an account')}</button></form><p style="font-size:.75rem">⚠ ${lang==='ta'?'இது முன்மாதிரி மட்டுமே. உங்கள் தகவல்கள் அனுப்பப்படவோ சேமிக்கப்படவோ இல்லை.':'Prototype only. Your details are not sent or stored.'}</p></section>`;
-  document.getElementById('backBtn').onclick=renderHome;
+  main.innerHTML=`<section class="screen"><button class="back" id="backBtn">← ${lang==='ta'?'கணக்கு தேர்வுக்குத் திரும்பு':'Back to account options'}</button><div class="eyebrow">${register?(lang==='ta'?'புதிய கணக்கு':'CREATE ACCOUNT'):(lang==='ta'?'மீண்டும் வருக':'WELCOME BACK')}</div><h2>${register?(lang==='ta'?'உங்கள் கணக்கை உருவாக்குங்கள்':'Create your account'):(lang==='ta'?'மீண்டும் வருக!':'Welcome back.')}</h2><p>${register?(lang==='ta'?'உங்கள் பெயர், மின்னஞ்சல் மற்றும் கடவுச்சொல்லை உள்ளிடவும்.':'Enter your name, email, and password to preview account creation.'):(lang==='ta'?'உங்கள் கணக்கில் தொடர உள்நுழையவும்.':'Log in to continue your experience.')}</p><form class="form" id="accountForm">${register?`<div class="field"><label for="name">${lang==='ta'?'பெயர்':'Name'}</label><input id="name" autocomplete="name" placeholder="${lang==='ta'?'உங்கள் பெயர்':'Your name'}" required></div>`:''}<div class="field"><label for="email">${lang==='ta'?'மின்னஞ்சல்':'Email address'}</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com" required></div><div class="field"><label for="password">${lang==='ta'?'கடவுச்சொல்':'Password'}</label><input id="password" type="password" autocomplete="${register?'new-password':'current-password'}" minlength="8" placeholder="${lang==='ta'?'குறைந்தது 8 எழுத்துகள்':'At least 8 characters'}" required></div><div class="form-error" id="error" aria-live="polite"></div><button class="btn primary" type="submit">${register?(lang==='ta'?'கணக்கை உருவாக்கு':'Create account'):(lang==='ta'?'உள்நுழைய':'Log in')} →</button><button class="btn secondary" type="button" id="switchForm">${register?(lang==='ta'?'ஏற்கனவே கணக்கு உள்ளதா? உள்நுழைய':'Already have an account? Log in'):(lang==='ta'?'புதியவரா? கணக்கை உருவாக்கு':'New here? Create an account')}</button></form><p style="font-size:.75rem">⚠ ${lang==='ta'?'இது முன்மாதிரி மட்டுமே. உங்கள் தகவல்கள் அனுப்பப்படவோ சேமிக்கப்படவோ இல்லை.':'Prototype only. Your details are not sent or stored.'}</p></section>`;
+  document.getElementById('backBtn').onclick=renderAuthChoice;
   document.getElementById('switchForm').onclick=()=>showForm(register?'login':'register');
   document.getElementById('accountForm').onsubmit=e=>{e.preventDefault();const pass=document.getElementById('password');const err=document.getElementById('error');if(!pass.checkValidity()){err.textContent=lang==='ta'?'கடவுச்சொல் குறைந்தது 8 எழுத்துகள் இருக்க வேண்டும்.':'Password must be at least 8 characters.';return;}err.textContent=lang==='ta'?'முன்மாதிரி சரிபார்ப்பு முடிந்தது. கணக்கு உருவாக்கப்படவில்லை.':'Demo validation complete. No account was created.';};
  }
- function renderHome(){main.innerHTML=`<section class="hero"><svg class="hero-art" viewBox="0 0 240 240" aria-hidden="true"><circle cx="120" cy="120" r="86" fill="none" stroke="#d6c3ff" stroke-width="2" stroke-dasharray="3 8"/><path d="M120 35 C150 65 150 92 120 108 C90 92 90 65 120 35 M120 205 C150 175 150 148 120 132 C90 148 90 175 120 205 M35 120 C65 90 92 90 108 120 C92 150 65 150 35 120 M205 120 C175 90 148 90 132 120 C148 150 175 150 205 120" fill="none" stroke="#f1d9a7" stroke-width="2"/><circle cx="120" cy="120" r="24" fill="#17102c" stroke="#f1d9a7"/><text x="120" y="128" text-anchor="middle" font-size="22" fill="#fff0cc" font-family="Noto Sans Tamil">வ</text></svg><div class="eyebrow" id="eyebrow"></div><h1 id="heroTitle"></h1><p id="heroText"></p><div class="actions"><button class="btn primary" id="startBtn"></button><button class="btn secondary" id="loginBtn"></button><button class="btn secondary" id="replayBtn"></button></div><div class="trust-row"><span>✦ தமிழ் & English</span><span>✦ பாரம்பரியம் + தொழில்நுட்பம்</span><span>✦ Mobile ready</span></div></section>`;setLanguage(lang);document.getElementById('startBtn').onclick=()=>showForm('register');document.getElementById('loginBtn').onclick=()=>showForm('login');document.getElementById('replayBtn').onclick=playIntro;}
- document.getElementById('startBtn').onclick=()=>showForm('register');document.getElementById('loginBtn').onclick=()=>showForm('login');document.getElementById('replayBtn').onclick=playIntro;
+ function renderHome(){main.innerHTML=`<section class="hero"><svg class="hero-art" viewBox="0 0 240 240" aria-hidden="true"><circle cx="120" cy="120" r="86" fill="none" stroke="#d6c3ff" stroke-width="2" stroke-dasharray="3 8"/><path d="M120 35 C150 65 150 92 120 108 C90 92 90 65 120 35 M120 205 C150 175 150 148 120 132 C90 148 90 175 120 205 M35 120 C65 90 92 90 108 120 C92 150 65 150 35 120 M205 120 C175 90 148 90 132 120 C148 150 175 150 205 120" fill="none" stroke="#f1d9a7" stroke-width="2"/><circle cx="120" cy="120" r="24" fill="#17102c" stroke="#f1d9a7"/><text x="120" y="128" text-anchor="middle" font-size="22" fill="#fff0cc" font-family="Noto Sans Tamil">வ</text></svg><div class="eyebrow" id="eyebrow"></div><h1 id="heroTitle"></h1><p id="heroText"></p><div class="actions"><button class="btn primary" id="startBtn"></button><button class="btn secondary" id="loginBtn"></button><button class="btn secondary" id="replayBtn"></button></div><div class="trust-row"><span>✦ தமிழ் & English</span><span>✦ பாரம்பரியம் + தொழில்நுட்பம்</span><span>✦ Mobile ready</span></div></section>`;setLanguage(lang);document.getElementById('startBtn').onclick=()=>renderLanguageStep();document.getElementById('loginBtn').onclick=()=>renderLanguageStep();document.getElementById('replayBtn').onclick=playIntro;}
  setLanguage('ta');playIntro();
 })();
 </script>
